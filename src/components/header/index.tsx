@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react'; // { useContext }
 
-import { DarkModeOutlined, LightModeOutlined, Menu } from '@mui/icons-material';
+import { LightModeOutlined, Menu } from '@mui/icons-material';
 import {
   AppBar,
   IconButton,
@@ -12,7 +12,7 @@ import {
 import { useGetIdentity } from '@refinedev/core';
 import { RefineThemedLayoutHeaderProps } from '@refinedev/mui';
 
-import { ColorModeContext } from '../../contexts/color-mode';
+// import { ColorModeContext } from '../../contexts/color-mode';
 
 interface IUser {
   id: number;
@@ -25,7 +25,6 @@ export const Header: React.FC<RefineThemedLayoutHeaderProps> = ({
   onToggleSiderClick,
   toggleSiderIcon: toggleSiderIconFromProps,
 }) => {
-  const { mode, setMode } = useContext(ColorModeContext);
 
   const { data: user } = useGetIdentity<IUser>();
 
@@ -44,7 +43,7 @@ export const Header: React.FC<RefineThemedLayoutHeaderProps> = ({
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              onClick={() => onToggleSiderClick?.()}
+              onClick={(): void => onToggleSiderClick?.()}
               edge="start"
               sx={{
                 mr: 2,
@@ -66,15 +65,11 @@ export const Header: React.FC<RefineThemedLayoutHeaderProps> = ({
           >
             <IconButton
               color="inherit"
-              onClick={() => {
-                setMode();
+              onClick={(): void => {
+                // setMode();
               }}
             >
-              {mode === 'dark' ? (
-                <LightModeOutlined />
-              ) : (
-                <DarkModeOutlined />
-              )}
+              <LightModeOutlined />
             </IconButton>
 
             {(user?.avatar || user?.name) && (
