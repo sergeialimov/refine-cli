@@ -1,7 +1,7 @@
 import { CssBaseline, GlobalStyles } from '@mui/material';
 import {
   Refine,
-  // WelcomePage,
+  WelcomePage,
   // Authenticated,
 } from '@refinedev/core';
 import dataProvider, { GraphQLClient } from '@refinedev/graphql';
@@ -22,6 +22,26 @@ const API_URL = 'https://your-graphql-url/graphql';
 const client = new GraphQLClient(API_URL);
 const gqlDataProvider = dataProvider(client);
 
+const loginResource = {
+  name: 'login',
+  auth: {
+    login: {
+      endpoint: '/auth/login',
+      method: 'post',
+    },
+    logout: {
+      endpoint: '/auth/logout',
+      method: 'post',
+    },
+  },
+  routes: {
+    login: {
+      path: '/',
+      element: <AuthPage />,
+    },
+  },
+};
+
 function App (): JSX.Element {
 
   return (
@@ -38,11 +58,11 @@ function App (): JSX.Element {
               syncWithLocation: true,
               warnWhenUnsavedChanges: true,
             }}
-            resources={[]}>
+            resources={[ loginResource ]}>
 
             <Routes>
-              {/* <Route index element={<WelcomePage />} /> */}
-              <Route index element={<AuthPage />} />
+              <Route path="auth/login" element={<AuthPage />} />
+              <Route index element={<WelcomePage />} />
             </Routes>
             <RefineKbar />
             <UnsavedChangesNotifier />
